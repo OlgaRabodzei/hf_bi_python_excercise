@@ -1,0 +1,39 @@
+[tool.poetry]
+name = "hf-bi-python-excercise"
+version = "0.1.0"
+description = ""
+authors = ["Olga Rabodzei <olga.rabodzei@klarna.com>"]
+readme = "README.md"
+packages = [{include = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pandas = "^2.2.0"
+requests = "^2.31.0"
+
+
+[tool.poetry.group.dev.dependencies]
+isort = "^5.13.2"
+black = "^24.1.1"
+mypy = "^1.8.0"
+flake8 = "^7.0.0"
+pytest = "^8.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
