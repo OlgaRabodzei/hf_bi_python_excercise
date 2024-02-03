@@ -1,4 +1,5 @@
 import pandas as pd
+from rapidfuzz import fuzz
 
 
 def transform_data(data: pd.DataFrame) -> pd.DataFrame:
@@ -18,8 +19,8 @@ def transform_data(data: pd.DataFrame) -> pd.DataFrame:
 def filter_by_key_word(
     df: pd.DataFrame, column_name: str, key_word: str
 ) -> pd.DataFrame:
-    # TODO: add word similarity.
-    return df[df[column_name].str.contains(key_word, case=False)].copy()
+    key_word = key_word.lower()
+    return df[df[column_name].apply(lambda x: fuzz.partial_ratio(x, key_word) > 75)].copy()
 
 
 def add_sum_of_two_columns(
