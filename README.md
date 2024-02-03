@@ -27,3 +27,12 @@ make run
 ```
 
 The result files will be saved in the `results` directory.
+
+# Possible improvements
+
+- Convert string literals to constants or configuration files
+- Provide a way to configure the app through input parameters. E.g. input file URL, output directory, etc.
+- Add input validation
+- Add logging
+- If different types of sources and destinations are expected, consider using a factory pattern to create the appropriate reader and writer.
+- If input files are expected to be extremely large, consider using Dask or Spark to process them in parallel.
