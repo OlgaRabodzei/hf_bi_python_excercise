@@ -1,3 +1,14 @@
+##@ Installation
+install-base: ## Install base setup tools
+	python3 -m pip install -U poetry
+
+install:: ## Install the dependencies needed for a production installation
+	poetry install
+
+install-dev:: ## Install development dependencies
+	poetry install --with=dev
+
+
 ##@ Code checks and formatting
 format/isort:: ## Format your code with isort
 	poetry run isort .
@@ -19,3 +30,8 @@ lint:: ## Run all code checks
 ##@ Tests
 test:: ## Run tests
 	poetry run pytest
+
+
+##@ Run
+run:: ## Run the application
+	poetry run python main.py
