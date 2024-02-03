@@ -54,8 +54,9 @@ def add_category_derived_from_time_sum(
 def aggregate_by_category(df: pd.DataFrame, category_column: str) -> pd.DataFrame:
     # Group by category, calculate avg total time and count entries.
     groped_df = df.groupby(category_column).agg({"totalTime": "mean", "name": "size"}).reset_index()
-    # Rename columns
     groped_df.rename(columns={"totalTime": "avgTotalTime", "name": "count"}, inplace=True)
-    # Set category as index
     groped_df.set_index(category_column, inplace=True)
+    # Drop unknown category
+    if "Unknown" in groped_df.index:
+        groped_df.drop("Unknown", inplace=True)
     return groped_df
