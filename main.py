@@ -1,16 +1,18 @@
-# This is a sample Python script.
+from src.url_data_source import load_data
+from src.etl import transform_data, aggregate_by_category
+from src.local_data_sink import save_data
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+FILE_URL = "https://bnlf-tests.s3.eu-central-1.amazonaws.com/recipes.json"
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+def main():
+    raw_data = load_data(FILE_URL)
+    df = transform_data(raw_data)
+    save_data(df, "Chilies.csv")
+    df_grouped = aggregate_by_category(df, "difficulty")
+    save_data(df_grouped, "Results.csv")
 
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    main()
