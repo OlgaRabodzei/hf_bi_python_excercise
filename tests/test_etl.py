@@ -2,21 +2,17 @@ import pandas as pd
 import pytest
 
 from src.etl import (
-    filter_by_key_word,
-    add_sum_of_two_columns,
     categorize_time,
-    add_category_derived_from_time_sum,
+    filter_by_key_word,
     aggregate_by_category,
+    add_sum_of_two_columns,
+    add_category_derived_from_time_sum,
 )
+
 
 @pytest.mark.parametrize(
     "key_word, expected",
-    [
-        ("Chilies", 3),
-        ("Chiles", 3),
-        ("cream", 1),
-        ("pork", 0)
-    ]
+    [("Chilies", 3), ("Chiles", 3), ("cream", 1), ("pork", 0)],
 )
 def test_filter_by_key_word(data: pd.DataFrame, key_word: str, expected: int):
     result = filter_by_key_word(data, "ingredients", key_word)
@@ -29,19 +25,14 @@ def test_add_sum_of_two_columns(data: pd.DataFrame):
         df,
         sum_column_name="totalTime",
         column_1="prepTime",
-        column_2="cookTime"
+        column_2="cookTime",
     )
     assert df["totalTime"].equals(df["prepTime"] + df["cookTime"])
 
 
 @pytest.mark.parametrize(
     "minutes, expected",
-    [
-        (None, "Unknown"),
-        (15, "Easy"),
-        (45, "Medium"),
-        (90, "Hard")
-    ]
+    [(None, "Unknown"), (15, "Easy"), (45, "Medium"), (90, "Hard")],
 )
 def test_categorize_time(minutes: int, expected: str):
     result = categorize_time(minutes)
@@ -58,13 +49,11 @@ def test_add_category_derived_from_time_sum(data: pd.DataFrame):
         df,
         sum_column_name="totalTime",
         column_1="prepTime",
-        column_2="cookTime"
+        column_2="cookTime",
     )
     # Run
     add_category_derived_from_time_sum(
-        df,
-        column_name="difficulty",
-        time_sum_column="totalTime"
+        df, column_name="difficulty", time_sum_column="totalTime"
     )
     # Assert
     assert df["difficulty"].isin(["Easy", "Medium", "Hard", "Unknown"]).all()
@@ -81,12 +70,10 @@ def test_aggregate_by_category(data: pd.DataFrame):
         df,
         sum_column_name="totalTime",
         column_1="prepTime",
-        column_2="cookTime"
+        column_2="cookTime",
     )
     add_category_derived_from_time_sum(
-        df,
-        column_name="difficulty",
-        time_sum_column="totalTime"
+        df, column_name="difficulty", time_sum_column="totalTime"
     )
     # Run
     result = aggregate_by_category(df, "difficulty")

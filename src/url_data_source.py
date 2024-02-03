@@ -1,6 +1,7 @@
-import requests
 import json
+
 import pandas as pd
+import requests
 
 
 def load_data(file_url: str) -> pd.DataFrame:
@@ -11,7 +12,7 @@ def load_data(file_url: str) -> pd.DataFrame:
     raw_data = [json.loads(row) for row in raw_data]
     df = pd.DataFrame(raw_data)
     # Convert the 'duration' columns to Pandas Timedelta
-    df['prepTime'] = pd.to_timedelta(df['prepTime'], errors='coerce')
-    df['cookTime'] = pd.to_timedelta(df['cookTime'], errors='coerce')
+    df["prepTime"] = pd.to_timedelta(df["prepTime"], errors="coerce")
+    df["cookTime"] = pd.to_timedelta(df["cookTime"], errors="coerce")
 
     return df
